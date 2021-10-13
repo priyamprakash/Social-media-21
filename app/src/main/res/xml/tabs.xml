@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Tabs xmlns:android="http://schemas.android.com/apk/res/android">
+    <tabs>
+        <tab
+            drawable="@drawable/ic_home"
+            text="@string/home" />
+
+        <tab
+            drawable="@drawable/ic_notifications"
+            text="@string/notification" />
+
+
+        <tab
+            drawable="@drawable/ic_add"
+            text="@string/add" />
+
+
+        <tab
+            drawable="@drawable/ic_search"
+            text="@string/search" />
+
+
+        <tab
+            drawable="@drawable/ic_profile"
+            text="@string/profile" />
+    </tabs>
+</Tabs>
