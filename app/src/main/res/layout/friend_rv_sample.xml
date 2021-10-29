@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:diagonal="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
@@ -13,10 +13,13 @@
         android:layout_width="@dimen/_55mdp"
         android:layout_height="@dimen/_55mdp"
 
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:src="@drawable/img_default"
         app:civ_border_color="#ffffff"
         app:civ_border_width="2dp"
         diagonal:civ_circle_background_color="@color/white"
+        diagonal:layout_constraintEnd_toEndOf="parent"
         diagonal:layout_constraintStart_toStartOf="parent"
         diagonal:layout_constraintTop_toTopOf="parent" />
 
