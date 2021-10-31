@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public int getItemCount() {
         return list.size();
-    }
+    .
 
     public  class  viewHolder extends RecyclerView.ViewHolder{
 
