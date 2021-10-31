@@ -10,11 +10,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.app.social21.Fragments.AddFragment;
 import com.app.social21.Fragments.HomeFragment;
-import com.app.social21.Fragments.NotificaionFragment;
+import com.app.social21.Fragments.NotificationFragment;
 import com.app.social21.Fragments.ProfileFragment;
 import com.app.social21.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -67,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_notification:
                             toolbar.setVisibility(View.GONE);
-                            selectedfragment = new NotificaionFragment();
+                            selectedfragment = new NotificationFragment();
                             break;
                         case R.id.nav_profile:
                             toolbar.setVisibility(View.VISIBLE);
