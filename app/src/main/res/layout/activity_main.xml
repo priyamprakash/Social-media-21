@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextColor="@color/black" />
+        app:titleTextColor="@color/white" />
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bottom"
         android:layout_width="wrap_content"
