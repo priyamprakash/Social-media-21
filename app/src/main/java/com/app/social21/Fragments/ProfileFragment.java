@@ -1,7 +1,5 @@
 package com.app.social21.Fragments;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.social21.Adapter.FriendAdapter;
-import com.app.social21.Model.FriendModel;
+import com.app.social21.Adapter.FollowersAdapter;
+import com.app.social21.Model.Follow;
 import com.app.social21.Model.User;
 import com.app.social21.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +41,7 @@ public class ProfileFragment extends Fragment {
 
 
     RecyclerView recyclerView;
-    ArrayList<FriendModel> list;
+    ArrayList<Follow> list;
     CircleImageView dp;
     ImageView change_cover_photo , cover_photo ,edit_pic;
     FirebaseAuth auth;
@@ -88,8 +85,9 @@ public class ProfileFragment extends Fragment {
                             .load(user.getCoverPhoto())
                             .placeholder(R.drawable.img_default)
                             .into(cover_photo);
+
                     Picasso.get()
-                            .load(user.getProfile_pic())
+                            .load(user.getProfilePic())
                             .placeholder(R.drawable.img_default)
                             .into(dp);
 
@@ -107,16 +105,30 @@ public class ProfileFragment extends Fragment {
 
         list = new ArrayList<>();
 
-        list.add(new FriendModel(R.drawable.img_default));
-        list.add(new FriendModel(R.drawable.img_default));
-        list.add(new FriendModel(R.drawable.img_default));
-        list.add(new FriendModel(R.drawable.img_default));
 
 
-        FriendAdapter adapter =  new FriendAdapter(list ,getContext());
+        FollowersAdapter adapter =  new FollowersAdapter(list ,getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext() , LinearLayoutManager.HORIZONTAL , false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        database.getReference().child("Users")
+                .child(auth.getUid())
+                .child("followers").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Follow follow = dataSnapshot.getValue(Follow.class);
+                    list.add(follow);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         change_cover_photo.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,27 +1,25 @@
 package com.app.social21.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.social21.Model.FriendModel;
+import com.app.social21.Model.Follow;
 import com.app.social21.R;
+import com.app.social21.databinding.FriendRvSampleBinding;
 
 import java.util.ArrayList;
 
-public class FriendAdapter extends  RecyclerView.Adapter<FriendAdapter.viewHolder>{
+public class FollowersAdapter extends  RecyclerView.Adapter<FollowersAdapter.viewHolder>{
 
-    ArrayList<FriendModel> list ;
+    ArrayList<Follow> list ;
     Context context;
 
-    public FriendAdapter(ArrayList<FriendModel> list, Context context) {
+    public FollowersAdapter(ArrayList<Follow> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -37,8 +35,7 @@ public class FriendAdapter extends  RecyclerView.Adapter<FriendAdapter.viewHolde
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
 
-        FriendModel model = list.get(position);
-        holder.profile.setImageResource(model.getProfile());
+        Follow model = list.get(position);
     }
 
     @Override
@@ -48,12 +45,11 @@ public class FriendAdapter extends  RecyclerView.Adapter<FriendAdapter.viewHolde
 
     public class viewHolder extends RecyclerView.ViewHolder{
 
-        ImageView profile;
-
+            FriendRvSampleBinding binding;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-            profile = itemView.findViewById(R.id.profile_image);
+            binding = FriendRvSampleBinding.bind(itemView);
 
 
         }

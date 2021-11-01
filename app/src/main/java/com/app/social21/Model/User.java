@@ -2,8 +2,10 @@ package com.app.social21.Model;
 
 public class User {
     private String name, profession, email, password;
+    private String userID;
     private String coverPhoto;
-    private String profile_pic;
+    private String followerCount;
+    private String profilePic;
 
     public User() {
     }
@@ -15,12 +17,28 @@ public class User {
         this.password = password;
     }
 
-    public String getProfile_pic() {
-        return profile_pic;
+    public String getFollowerCount() {
+        return followerCount;
     }
 
-    public void setProfile_pic(String profile_pic) {
-        this.profile_pic = profile_pic;
+    public void setFollowerCount(String followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getCoverPhoto() {

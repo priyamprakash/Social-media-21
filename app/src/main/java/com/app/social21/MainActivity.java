@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,10 +18,12 @@ import com.app.social21.Fragments.NotificationFragment;
 import com.app.social21.Fragments.ProfileFragment;
 import com.app.social21.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottom_navigation;
     Fragment selectedfragment =  null;
-
+    FirebaseAuth auth;
 
      Toolbar toolbar;
 
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         MainActivity.this.setTitle("My Profile");
+
+        auth = FirebaseAuth.getInstance();
 
 
         bottom_navigation = findViewById(R.id.bottomBar);
@@ -88,5 +93,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_item , menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case  R.id.setting :
+                auth.signOut();
+                Intent i = new Intent(MainActivity.this , LoginActivity.class);
+                startActivity(i);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
