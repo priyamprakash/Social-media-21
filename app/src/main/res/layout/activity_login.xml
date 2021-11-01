@@ -128,7 +128,8 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <TextView
-        android:id="@+id/register"
+        android:id="@+id/gotoSignup"
+        android:onClick="gotoSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
