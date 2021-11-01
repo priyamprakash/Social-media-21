@@ -37,13 +37,16 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment {
 
 
     RecyclerView recyclerView;
     ArrayList<FriendModel> list;
-    ImageView change_cover_photo , cover_photo;
+    CircleImageView dp;
+    ImageView change_cover_photo , cover_photo ,edit_pic;
     FirebaseAuth auth;
     FirebaseStorage  storage;
     FirebaseDatabase database;
@@ -67,6 +70,8 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         recyclerView = view.findViewById(R.id.friendRv);
         cover_photo = view.findViewById(R.id.cover_photo);
+        edit_pic = view.findViewById(R.id.edit_pic);
+        dp = view.findViewById(R.id.dp);
         userName = view.findViewById(R.id.userName);
         profession = view.findViewById(R.id.profession);
 
@@ -83,6 +88,10 @@ public class ProfileFragment extends Fragment {
                             .load(user.getCoverPhoto())
                             .placeholder(R.drawable.img_default)
                             .into(cover_photo);
+                    Picasso.get()
+                            .load(user.getProfile_pic())
+                            .placeholder(R.drawable.img_default)
+                            .into(dp);
 
                     userName.setText(user.getName());
                     profession.setText(user.getProfession());
@@ -119,35 +128,76 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        edit_pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent , 22);
+            }
+        });
+
         return  view;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data.getData() != null);
-        Uri uri = data.getData();
-        Log.d(TAG, "onActivityResult: " + uri);
-        cover_photo.setImageURI(uri);
+        if (requestCode == 11) {
+//      CHANGE COVER PHOTO
 
-        final StorageReference reference = storage.getReference().child("cover_photo")
-                .child(FirebaseAuth.getInstance().getUid());//fine
+            if (data.getData() != null) {
+                Uri uri = data.getData();
+                cover_photo.setImageURI(uri);
 
-        reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d(TAG, "onSuccess: " + reference);
-                Toast.makeText(getContext(), "Cover photo saved", Toast.LENGTH_SHORT).show();
-                reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                final StorageReference reference = storage.getReference().child("cover_photo")
+                        .child(FirebaseAuth.getInstance().getUid());//fine
+
+                reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(Uri uri) {
-                        Log.d(TAG, "onSuccess: 2" + uri.toString());
-                        database.getReference().child("Users").child(auth.getUid()).child("coverPhoto").setValue(uri.toString());
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getContext(), "Cover photo saved", Toast.LENGTH_SHORT).show();
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                database.getReference().child("Users").child(auth.getUid()).child("coverPhoto").setValue(uri.toString());
 
+                            }
+                        });
                     }
                 });
             }
-        });
+        }
+
+        if(requestCode == 22){
+            //      CHANGE DISPLAY  PROFILE
+
+            if (data.getData() != null) {
+                Uri uri = data.getData();
+                dp.setImageURI(uri);
+
+                final StorageReference reference = storage.getReference().child("profile_pic")
+                        .child(FirebaseAuth.getInstance().getUid());//fine
+
+                reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getContext(), "Profile pic saved", Toast.LENGTH_SHORT).show();
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                database.getReference().child("Users").child(auth.getUid()).child("profilePic").setValue(uri.toString());
+
+                            }
+                        });
+                    }
+                });
+            }
+
+        }
+
 
     }
 }

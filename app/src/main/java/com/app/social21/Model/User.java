@@ -3,6 +3,7 @@ package com.app.social21.Model;
 public class User {
     private String name, profession, email, password;
     private String coverPhoto;
+    private String profile_pic;
 
     public User() {
     }
@@ -12,6 +13,14 @@ public class User {
         this.profession = profession;
         this.email = email;
         this.password = password;
+    }
+
+    public String getProfile_pic() {
+        return profile_pic;
+    }
+
+    public void setProfile_pic(String profile_pic) {
+        this.profile_pic = profile_pic;
     }
 
     public String getCoverPhoto() {
