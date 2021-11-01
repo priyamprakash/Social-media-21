@@ -1,13 +1,25 @@
 package com.app.social21.Model;
 
 public class User {
- private  String name , profession , email , password;
+    private String name, profession, email, password;
+    private String coverPhoto;
 
-    public User(String name, String profession, String email, String password) {
+    public User() {
+    }
+
+    public User( String name, String profession, String email, String password) {
         this.name = name;
         this.profession = profession;
         this.email = email;
         this.password = password;
+    }
+
+    public String getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(String coverPhoto) {
+        this.coverPhoto = coverPhoto;
     }
 
     public String getName() {

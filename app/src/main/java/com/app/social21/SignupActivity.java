@@ -54,7 +54,7 @@ public class SignupActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    User user = new User(name, profession, email, password);
+                                    User user = new User( name, profession, email, password);
                                     String id =  task.getResult().getUser().getUid();
                                     database.getReference().child("Users").child(id).setValue(user);
                                     Toast.makeText(SignupActivity.this, "User Data saved", Toast.LENGTH_SHORT).show();

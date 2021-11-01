@@ -11,7 +11,7 @@
 
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/cover_photo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_200mdp"
         android:layout_marginTop="4dp"
@@ -39,7 +39,7 @@
         diagonal:layout_constraintBottom_toBottomOf="parent"
         diagonal:layout_constraintEnd_toEndOf="parent"
         diagonal:layout_constraintStart_toStartOf="parent"
-        diagonal:layout_constraintTop_toTopOf="@+id/imageView3"
+        diagonal:layout_constraintTop_toTopOf="@+id/cover_photo"
         diagonal:layout_constraintVertical_bias="0.324" />
 
     <ImageView
@@ -55,7 +55,7 @@
         diagonal:layout_constraintVertical_bias="0.9" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4mdp"
@@ -69,7 +69,7 @@
         diagonal:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/profession"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
@@ -78,9 +78,9 @@
         android:textColor="#808080"
         android:textSize="@dimen/_12mdp"
         android:textStyle="bold"
-        diagonal:layout_constraintEnd_toEndOf="@+id/textView"
-        diagonal:layout_constraintStart_toStartOf="@+id/textView"
-        diagonal:layout_constraintTop_toBottomOf="@+id/textView" />
+        diagonal:layout_constraintEnd_toEndOf="@+id/userName"
+        diagonal:layout_constraintStart_toStartOf="@+id/userName"
+        diagonal:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <ImageView
         android:id="@+id/commentView"
@@ -93,7 +93,7 @@
         app:layout_constraintEnd_toStartOf="@+id/callView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/addFriendView"
-        diagonal:layout_constraintTop_toBottomOf="@+id/textView4" />
+        diagonal:layout_constraintTop_toBottomOf="@+id/profession" />
 
     <ImageView
         android:id="@+id/callView"
@@ -104,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/commentView"
-        diagonal:layout_constraintTop_toBottomOf="@+id/textView4" />
+        diagonal:layout_constraintTop_toBottomOf="@+id/profession" />
 
     <ImageView
         android:id="@+id/addFriendView"
@@ -118,7 +118,19 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        diagonal:layout_constraintTop_toBottomOf="@+id/textView4" />
+        diagonal:layout_constraintTop_toBottomOf="@+id/profession" />
+
+    <ImageView
+        android:id="@+id/change_cover_photo"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="216dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.763"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/cover_photo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"

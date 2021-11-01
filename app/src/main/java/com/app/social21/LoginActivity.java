@@ -21,10 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class LoginActivity extends AppCompatActivity {
 
     FirebaseAuth auth;
-    FirebaseDatabase database;
+    //    FirebaseDatabase database;
     FirebaseUser currentUser;
     Button login_btn;
     EditText emailET, passwordET;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,23 +36,36 @@ public class LoginActivity extends AppCompatActivity {
         emailET = findViewById(R.id.emailET);
         passwordET = findViewById(R.id.passwordET);
 //       ---------------------------------------------
+        //        database =FirebaseDatabase.getInstance();
+
         auth = FirebaseAuth.getInstance();
-        database =FirebaseDatabase.getInstance();
+        currentUser = auth.getCurrentUser();
+
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = emailET.getText().toString();
                 String password = passwordET.getText().toString();
-                auth.signInWithEmailAndPassword(email , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                if(email == null || password==null)
+                {
+                    Toast.makeText(LoginActivity.this, "Email and Password can't be empty", Toast.LENGTH_SHORT).show();
+                }
+                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "Logged in as : " + email, Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(LoginActivity.this , MainActivity.class);
+                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(i);
                         }
+                        else
+                        {
+                            Toast.makeText(LoginActivity.this, "Login Unsuccessful" , Toast.LENGTH_SHORT).show();
+
+                        }
                     }
+
                 });
 
             }
@@ -59,7 +73,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void gotoSignup(View view) {
-        Intent i = new Intent(LoginActivity.this , LoginActivity.class);
+        Intent i = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(i);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (currentUser != null) {
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 }
