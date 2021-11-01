@@ -46,9 +46,16 @@ dependencies {
     implementation 'com.github.MrNouri:DynamicSizes:1.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
 //    implementation 'com.github.florent37:diagonallayout:1.0.9'
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+
+
 
 
 
 //    implementation 'com.github.iammert:ReadableBottomBar:0.2'
 
 }
+
+apply plugin: 'com.google.gms.google-services'

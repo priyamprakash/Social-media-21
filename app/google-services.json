@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1018838840342",
+    "project_id": "sample-social-oct",
+    "storage_bucket": "sample-social-oct.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018838840342:android:d20840d361f1f3f5817137",
+        "android_client_info": {
+          "package_name": "com.app.social21"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018838840342-j33fe2571ga8n1bmchrn60qr5f20i0ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBygXylCbNyoRaZWxwjuxnqKaZ2rUCV5ys"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018838840342-j33fe2571ga8n1bmchrn60qr5f20i0ba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
