@@ -58,6 +58,9 @@ public class SignupActivity extends AppCompatActivity {
                                     String id =  task.getResult().getUser().getUid();
                                     database.getReference().child("Users").child(id).setValue(user);
                                     Toast.makeText(SignupActivity.this, "User Data saved", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent = new Intent(SignupActivity.this , MainActivity.class);
+                                    startActivity(intent);
                                 }
                                 else {
                                     Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_SHORT).show();
