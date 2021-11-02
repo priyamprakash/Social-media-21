@@ -16,7 +16,10 @@ import com.app.social21.R;
 import com.app.social21.databinding.UsersSampleBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -47,42 +50,67 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
         holder.binding.name.setText(user.getName());
         holder.binding.profession.setText(user.getProfession());
 
-        holder.binding.followButton.setOnClickListener(new View.OnClickListener() {
-//            in the node of the user I started following
-            @Override
-            public void onClick(View v) {
-                Follow follow =  new Follow();
-                follow.setFollowedBy(FirebaseAuth.getInstance().getUid());
-                follow.setFollowedAt(new Date().getTime());
 
-                FirebaseDatabase.getInstance().getReference()
-                        .child("Users")
-                        .child(user.getUserID())
-                        .child("followers")
-                        .child(FirebaseAuth.getInstance().getUid())
-                        .setValue(follow).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        FirebaseDatabase.getInstance().getReference()
-                                .child("Users")
-                                .child(user.getUserID())
-                                .child("followerCount")
-                                .setValue(user.getFollowerCount() + 1)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        holder.binding.followButton.setBackground(ContextCompat.getDrawable(context , R.drawable.follow_active_button));
-                                        holder.binding.followButton.setText("Following");
-                                        holder.binding.followButton.setTextColor(context.getResources().getColor(R.color.grey));
-                                        holder.binding.followButton.setEnabled(false);
-                                        Toast.makeText(context, "You Followed"  + user.getName(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                    }
-                });
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(user.getUserID())
+                .child("followers")
+                .child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    holder.binding.followButton.setBackground(ContextCompat.getDrawable(context , R.drawable.follow_active_button));
+                    holder.binding.followButton.setText("Following");
+                    holder.binding.followButton.setTextColor(context.getResources().getColor(R.color.grey));
+                    holder.binding.followButton.setEnabled(false);
+                }
+                else {
+                    holder.binding.followButton.setOnClickListener(new View.OnClickListener() {
+                        //            in the node of the user I started following
+                        @Override
+                        public void onClick(View v) {
+                            Follow follow =  new Follow();
+                            follow.setFollowedBy(FirebaseAuth.getInstance().getUid());
+                            follow.setFollowedAt(new Date().getTime());
+
+
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(user.getUserID())
+                                    .child("followers")
+                                    .child(FirebaseAuth.getInstance().getUid())
+                                    .setValue(follow).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    FirebaseDatabase.getInstance().getReference()
+                                            .child("Users")
+                                            .child(user.getUserID())
+                                            .child("followerCount")
+                                            .setValue(user.getFollowerCount() + 1)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    holder.binding.followButton.setBackground(ContextCompat.getDrawable(context , R.drawable.follow_active_button));
+                                                    holder.binding.followButton.setText("Following");
+                                                    holder.binding.followButton.setTextColor(context.getResources().getColor(R.color.grey));
+                                                    holder.binding.followButton.setEnabled(false);
+                                                    Toast.makeText(context, "You Followed : "  + user.getName(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                }
+                            });
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
 
     }
 

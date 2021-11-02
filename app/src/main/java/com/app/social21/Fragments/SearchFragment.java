@@ -1,5 +1,7 @@
 package com.app.social21.Fragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,7 @@ public class SearchFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseDatabase database;
 
+    private static int c =0;
 
     public SearchFragment() {
     }
@@ -39,12 +43,15 @@ public class SearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        c = 0 ;
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         // Inflate the layout for this fragment
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         UserAdapter adapter = new UserAdapter(getContext() , list);
@@ -55,14 +62,18 @@ public class SearchFragment extends Fragment {
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot  dataSnapshot : snapshot.getChildren()){
-                    User user = dataSnapshot.getValue(User.class);
-                    user.setUserID(dataSnapshot.getKey());
-                    list.add(user);
+                if(c  == 0 ){
+                    for(DataSnapshot  dataSnapshot : snapshot.getChildren()){
+                        User user = dataSnapshot.getValue(User.class);
+                        user.setUserID(dataSnapshot.getKey());
+                        list.add(user);
+                    }
 
+                    adapter.notifyDataSetChanged();
+                    c++;
+                    Log.d(TAG, "onDataChange: " + c);
                 }
 
-                adapter.notifyDataSetChanged();
             }
 
 

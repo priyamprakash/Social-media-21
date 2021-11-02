@@ -77,7 +77,8 @@ public class ProfileFragment extends Fragment {
         change_cover_photo = view.findViewById(R.id.change_cover_photo);
 
 //        getting user cover photo from the users node >> uid >> cover photo
-        database.getReference().child("Users").child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.getReference().child("Users").
+                child(auth.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
@@ -119,6 +120,7 @@ public class ProfileFragment extends Fragment {
                 .child("followers").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Follow follow = dataSnapshot.getValue(Follow.class);
                     list.add(follow);
