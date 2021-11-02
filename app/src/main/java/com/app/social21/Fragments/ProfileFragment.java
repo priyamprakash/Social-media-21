@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseStorage  storage;
     FirebaseDatabase database;
-    TextView userName , profession;
+    TextView userName , profession , followers;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
         dp = view.findViewById(R.id.dp);
         userName = view.findViewById(R.id.userName);
         profession = view.findViewById(R.id.profession);
+        followers = view.findViewById(R.id.followers);
 
 
         change_cover_photo = view.findViewById(R.id.change_cover_photo);
@@ -93,6 +94,7 @@ public class ProfileFragment extends Fragment {
 
                     userName.setText(user.getName());
                     profession.setText(user.getProfession());
+                    followers.setText(user.getFollowerCount() + "");
                     //fine
                 }
             }

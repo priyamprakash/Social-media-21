@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.social21.Model.Follow;
@@ -70,6 +71,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.viewHolder> {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
+                                        holder.binding.followButton.setBackground(ContextCompat.getDrawable(context , R.drawable.follow_active_button));
+                                        holder.binding.followButton.setText("Following");
+                                        holder.binding.followButton.setTextColor(context.getResources().getColor(R.color.grey));
+                                        holder.binding.followButton.setEnabled(false);
                                         Toast.makeText(context, "You Followed"  + user.getName(), Toast.LENGTH_SHORT).show();
                                     }
                                 });
