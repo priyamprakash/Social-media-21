@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.app.social21.Fragments.AddFragment;
+import com.app.social21.Fragments.AddPostFragment;
 import com.app.social21.Fragments.HomeFragment;
 import com.app.social21.Fragments.NotificationFragment;
 import com.app.social21.Fragments.ProfileFragment;
@@ -22,10 +24,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottom_navigation;
-    Fragment selectedfragment =  null;
+    Fragment selectedfragment = null;
     FirebaseAuth auth;
 
-     Toolbar toolbar;
+    Toolbar toolbar;
+    //Button button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
         bottom_navigation = findViewById(R.id.bottomBar);
         bottom_navigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
         toolbar.setVisibility(View.GONE);
-        FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, new HomeFragment());
         transaction.commit();
-
 
 
     }
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_home:
                             toolbar.setVisibility(View.GONE);
                             selectedfragment = new HomeFragment();
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case R.id.nav_add:
                             toolbar.setVisibility(View.GONE);
-                            selectedfragment = new AddFragment();
+                            selectedfragment = new AddPostFragment();
                             break;
                         case R.id.nav_notification:
                             toolbar.setVisibility(View.GONE);
@@ -91,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_item , menu);
+        getMenuInflater().inflate(R.menu.menu_item, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case  R.id.setting :
+        switch (item.getItemId()) {
+            case R.id.setting:
                 auth.signOut();
-                Intent i = new Intent(MainActivity.this , LoginActivity.class);
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
                 break;
         }
