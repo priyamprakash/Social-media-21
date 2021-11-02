@@ -33,7 +33,6 @@ public class SearchFragment extends Fragment {
     FirebaseAuth auth;
     FirebaseDatabase database;
 
-    private static int c =0;
 
     public SearchFragment() {
     }
@@ -43,7 +42,6 @@ public class SearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        c = 0 ;
 
     }
 
@@ -62,17 +60,16 @@ public class SearchFragment extends Fragment {
         database.getReference().child("Users").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(c  == 0 ){
+                    list.clear();
                     for(DataSnapshot  dataSnapshot : snapshot.getChildren()){
                         User user = dataSnapshot.getValue(User.class);
                         user.setUserID(dataSnapshot.getKey());
+                        if(!dataSnapshot.getKey().equals(FirebaseAuth.getInstance().getUid()))
                         list.add(user);
                     }
 
                     adapter.notifyDataSetChanged();
-                    c++;
-                    Log.d(TAG, "onDataChange: " + c);
-                }
+
 
             }
 
