@@ -84,7 +84,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
         dashboardRv = view.findViewById(R.id.dashboardRv);
         postList = new ArrayList<>();
 
