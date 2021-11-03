@@ -2,12 +2,14 @@ package com.app.social21;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.app.social21.Adapter.CommentAdapter;
 import com.app.social21.Model.Comment;
 import com.app.social21.Model.Post;
 import com.app.social21.Model.User;
@@ -20,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CommentActvity extends AppCompatActivity {
@@ -30,7 +33,7 @@ public class CommentActvity extends AppCompatActivity {
     String postedBy;
     FirebaseAuth auth;
     FirebaseDatabase database;
-
+    ArrayList<Comment> list = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +135,26 @@ public class CommentActvity extends AppCompatActivity {
             }
         });
 
+        CommentAdapter adapter = new CommentAdapter(this , list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        binding.commentsRv.setLayoutManager(layoutManager);
+        binding.commentsRv.setAdapter(adapter);
 
+        database.getReference().child("posts").child(postId).child("comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Comment comment = dataSnapshot.getValue(Comment.class);
+                    list.add(comment);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

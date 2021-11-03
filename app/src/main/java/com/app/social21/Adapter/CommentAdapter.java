@@ -1,6 +1,7 @@
 package com.app.social21.Adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.social21.Model.Comment;
+import com.app.social21.Model.User;
 import com.app.social21.R;
 import com.app.social21.databinding.CommentSampleBinding;
+import com.github.marlonlom.utilities.timeago.TimeAgo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -36,8 +45,28 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.viewHold
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
             Comment comment = list.get(position);
-            holder.binding.comment.setText(comment.getCommentBody());
-            holder.binding.time.setText(comment.getCommentedAt() + "");
+
+//            String time = TimeAgo.using(comment.getCommentedAt());
+//            holder.binding.time.setText(time);
+        holder.binding.time.setText("");
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(comment.getCommentedBy()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User user = snapshot.getValue(User.class);
+                Picasso.get().load(user.getProfilePic())
+                        .placeholder(R.drawable.img_man1)
+                        .into(holder.binding.profileImage);
+                holder.binding.comment.setText(Html.fromHtml("<b>" + user.getName() + "</b>" + "  " +  comment.getCommentBody()));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
