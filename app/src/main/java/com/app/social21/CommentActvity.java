@@ -73,6 +73,7 @@ public class CommentActvity extends AppCompatActivity {
                 Picasso.get().load(user.getProfilePic()).placeholder(R.drawable.img_man1).into(binding.profileImage);
                 binding.name.setText(user.getName());
 
+
             }
 
             @Override

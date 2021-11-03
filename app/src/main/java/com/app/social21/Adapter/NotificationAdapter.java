@@ -1,7 +1,6 @@
 package com.app.social21.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             profile = itemView.findViewById(R.id.profile_image);
             notification = itemView.findViewById(R.id.notification);
-            time = itemView.findViewById(R.id.time);
+            time = itemView.findViewById(R.id.profession);
 
 
 
