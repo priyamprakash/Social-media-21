@@ -1,6 +1,7 @@
 package com.app.social21.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.app.social21.CommentActvity;
 import com.app.social21.Model.Post;
 import com.app.social21.Model.User;
 import com.app.social21.R;
@@ -117,6 +119,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             }
         });
 
+        holder.binding.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context.getApplicationContext() , CommentActvity.class);
+//                i.putExtra("postId" ,  )
+                context.startActivity(i);
+            }
+        });
 
     }
 

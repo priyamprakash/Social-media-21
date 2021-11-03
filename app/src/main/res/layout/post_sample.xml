@@ -142,6 +142,7 @@
 
 
                 <ImageView
+                    android:id="@+id/comment"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
@@ -150,7 +151,7 @@
                     android:src="@drawable/ic_comments" />
 
                 <TextView
-                    android:id="@+id/comment"
+                    android:id="@+id/nComment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
@@ -161,6 +162,7 @@
                     android:textStyle="bold" />
 
                 <ImageView
+                    android:id="@+id/share"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="10dp"
@@ -169,7 +171,7 @@
                     android:src="@drawable/ic_share" />
 
                 <TextView
-                    android:id="@+id/share"
+                    android:id="@+id/nShare"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"
