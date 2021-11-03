@@ -41,7 +41,7 @@ import java.util.Date;
 public class HomeFragment extends Fragment {
 
     RecyclerView storyRv ,dashboardRv;
-    ArrayList<Story> list;
+    ArrayList<Story> storyList;
     ArrayList<Post> postList;
 //    ImageView addStory;
     FirebaseDatabase database;
@@ -71,16 +71,44 @@ public class HomeFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
         storyRv = view.findViewById(R.id.storyRv);
-        list = new ArrayList<>();
+        storyList = new ArrayList<>();
 
 //        list.add(new Story(R.drawable.img_man1, R.drawable.img_live, R.drawable.profile, "Priyam"));
 
 
-        StoryAdapter adapter = new StoryAdapter(list, getContext());
+        StoryAdapter adapter = new StoryAdapter(storyList, getContext());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         storyRv.setLayoutManager(linearLayoutManager);
         storyRv.setNestedScrollingEnabled(false);
         storyRv.setAdapter(adapter);
+
+        database.getReference().child("stories").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    for(DataSnapshot storySnapshot : snapshot.getChildren()){
+                        Story story = new Story();
+                        story.setStoryBy(storySnapshot.getKey());
+                        story.setStoryAt(storySnapshot.child("postedBy").getValue(Long.class));
+
+                        ArrayList<UserStories> stories = new ArrayList<>();
+                        for(DataSnapshot snapshot1 : storySnapshot.child("userStories").getChildren()){
+                         UserStories userStories = snapshot1.getValue(UserStories.class);
+                         stories.add(userStories);
+
+                        }
+                        story.setStories(stories);
+                        storyList.add(story);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 

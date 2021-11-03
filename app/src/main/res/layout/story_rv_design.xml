@@ -26,7 +26,7 @@
         app:riv_tile_mode="repeat" />
 
     <com.devlomi.circularstatusview.CircularStatusView
-        android:id="@+id/view"
+        android:id="@+id/statusCircle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/white_circle"
