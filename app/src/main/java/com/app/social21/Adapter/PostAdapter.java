@@ -50,6 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 .placeholder(R.drawable.img_man1)
                 .into(holder.binding.postImage);
         holder.binding.nlike.setText(model.getPostLike() + "");
+        holder.binding.nComment.setText(model.getCommentCount() + "");
         String description = model.getPostDescription();
 
         if (description == ""){
@@ -122,9 +123,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
         holder.binding.comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context.getApplicationContext() , CommentActvity.class);
-//                i.putExtra("postId" ,  )
-                context.startActivity(i);
+                Intent intent = new Intent(context.getApplicationContext() , CommentActvity.class);
+                intent.putExtra("postId" ,model.getPostId());
+                intent.putExtra("postedBy", model.getPostedBy());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
 
