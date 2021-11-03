@@ -47,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                 .load(model.getPostImage())
                 .placeholder(R.drawable.img_man1)
                 .into(holder.binding.postImage);
-        holder.binding.like.setText(model.getPostLike() + "");
+        holder.binding.nlike.setText(model.getPostLike() + "");
         String description = model.getPostDescription();
 
         if (description == ""){
@@ -82,7 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
             if(snapshot.exists()){
-                holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.red_like , 0,0,0);
+                holder.binding.like.setImageResource(R.drawable.red_like);
             }
             else {
                 holder.binding.like.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +100,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                                         .setValue(model.getPostLike() + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        holder.binding.like.setCompoundDrawablesWithIntrinsicBounds(R.drawable.red_like , 0,0,0);
+                                        holder.binding.like.setImageResource(R.drawable.red_like);
 
                                     }
                                 });
