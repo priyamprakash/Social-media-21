@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,18 +18,18 @@
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_weight="1"
-                android:id="@+id/image_profile"
+                android:id="@+id/profile_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:src="@drawable/img_default" />
 
             <LinearLayout
-                android:layout_weight="8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="8"
                 android:orientation="vertical">
 
                 <TextView
@@ -46,7 +46,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/about"
+                    android:id="@+id/profession"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -61,22 +61,22 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_weight="1"
                 android:layout_width="@dimen/_10mdp"
                 android:layout_height="@dimen/_30mdp"
-                android:src="@drawable/ic_more"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_more"
                 app:tint="@color/black" />
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/post_image"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200mdp"
+                android:layout_height="220dp"
                 android:layout_marginHorizontal="@dimen/_10mdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_man1"
@@ -89,7 +89,7 @@
                 app:riv_mutate_background="true" />
 
             <ImageView
-                android:id="@+id/save"
+                android:id="@+id/saveImg"
                 android:layout_width="@dimen/_40mdp"
                 android:layout_height="40dp"
                 android:layout_gravity="end"
@@ -102,68 +102,83 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_like" />
+            android:orientation="vertical">
             <TextView
-                android:gravity="center"
-                android:id="@+id/like"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:text="243"
-                android:layout_marginLeft="8dp"
-                android:textColor="#302F2F"
-                android:textStyle="bold" />
+                android:id="@+id/postDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:layout_margin="10dp"
+                android:text="Lorem ipsum "
+
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_like" />
+
+                <TextView
+                    android:id="@+id/like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:text="243"
+                    android:textColor="#302F2F"
+                    android:textStyle="bold" />
 
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:padding="3dp"
-                android:src="@drawable/ic_comments" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_comments" />
 
-            <TextView
-                android:gravity="center"
-                android:id="@+id/comment"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:text="54"
-                android:layout_marginLeft="8dp"
-                android:textColor="#302F2F"
-                android:textStyle="bold" />
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="10dp"
-                android:padding="3dp"
-                android:src="@drawable/ic_share" />
+                <TextView
+                    android:id="@+id/comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:text="54"
+                    android:textColor="#302F2F"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:gravity="center"
-                android:id="@+id/share"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:text="32"
-                android:layout_marginLeft="8dp"
-                android:textColor="#302F2F"
-                android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:padding="3dp"
+                    android:src="@drawable/ic_share" />
+
+                <TextView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center"
+                    android:text="32"
+                    android:textColor="#302F2F"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-
 
 
     </LinearLayout>
