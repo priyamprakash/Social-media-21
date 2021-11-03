@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.app.social21.Adapter.DashboardAdapter;
 import com.app.social21.Adapter.StoryAdapter;
-import com.app.social21.Model.DashboardModel;
+import com.app.social21.Model.Post;
 import com.app.social21.Model.StoryModel;
 import com.app.social21.R;
 
@@ -23,7 +23,7 @@ public class HomeFragment extends Fragment {
 
     RecyclerView storyRv ,dashboardRv;
     ArrayList<StoryModel> list;
-    ArrayList<DashboardModel> dashboardList;
+    ArrayList<Post> dashboardList;
 
     public HomeFragment() {
 
@@ -60,14 +60,7 @@ public class HomeFragment extends Fragment {
         dashboardRv = view.findViewById(R.id.dashboardRv);
         dashboardList = new ArrayList<>();
 
-        dashboardList.add(new DashboardModel(R.drawable.profile , R.drawable.img_man1, R.drawable.ic_saved ,
-                "Priyam Prakash" , "Photographer" , "123" , "22" , "37"));
-        dashboardList.add(new DashboardModel(R.drawable.profile , R.drawable.img_man1, R.drawable.ic_saved ,
-                "Derek" , "Traveller" , "123" , "22" , "37"));
-        dashboardList.add(new DashboardModel(R.drawable.profile , R.drawable.img_man1, R.drawable.ic_saved ,
-                "Javeed" , "Photographer" , "123" , "22" , "37"));
-        dashboardList.add(new DashboardModel(R.drawable.profile , R.drawable.img_man1, R.drawable.ic_saved ,
-                "Priyam Prakash" , "Photographer" , "123" , "22" , "37"));
+//
 
         DashboardAdapter dashboardAdapter = new DashboardAdapter(dashboardList, getContext());
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

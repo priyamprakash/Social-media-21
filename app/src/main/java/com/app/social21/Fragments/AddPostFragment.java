@@ -1,5 +1,6 @@
 package com.app.social21.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,16 +15,26 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.app.social21.Model.Post;
 import com.app.social21.Model.User;
 import com.app.social21.R;
 import com.app.social21.databinding.FragmentAddPostBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Date;
 
 public class AddPostFragment extends Fragment {
 
@@ -31,6 +42,8 @@ public class AddPostFragment extends Fragment {
     Uri uri;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    FirebaseStorage storage;
+    ProgressDialog dialog;
 
     public AddPostFragment() {
         // Required empty public constructor
@@ -42,6 +55,8 @@ public class AddPostFragment extends Fragment {
 
         auth =FirebaseAuth.getInstance();
         database =FirebaseDatabase.getInstance();
+        storage = FirebaseStorage.getInstance();
+        dialog = new ProgressDialog(getContext());
 
 
     }
@@ -51,6 +66,12 @@ public class AddPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentAddPostBinding.inflate(inflater, container, false);
+
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setTitle("Post uploading");
+        dialog.setMessage("Please wait...");
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
 
 //        setting the profile image , username and profession of the current user
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -109,6 +130,43 @@ public class AddPostFragment extends Fragment {
             }
         });
 
+        binding.postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.show();
+//                Storage >> posts >>user id >> time stamp - image
+                final StorageReference reference = storage.getReference().child("posts")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .child(new Date().getTime() + "");
+                reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+//                                setting all the things in  post model - setter method
+                                Post post = new Post();
+                                post.setPostImage(uri.toString());
+                                post.setPostedBy(FirebaseAuth.getInstance().getUid());
+                                post.setPostDescription(binding.postDescription.getText().toString());
+                                post.setPostedAt(new Date().getTime());
+
+//                                putting the data from post model to database - posts node
+                                database.getReference().child("posts").push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        dialog.dismiss();
+                                        Toast.makeText(getContext(), "Posted successfully", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -117,7 +175,7 @@ public class AddPostFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data.getData() != null) {
-//            set image received from the gallery to the image view - postImage. 
+//            set image received from the gallery to the image view - postImage.
             uri = data.getData();
             binding.postImage.setImageURI(uri);
             binding.postImage.setVisibility(View.VISIBLE);

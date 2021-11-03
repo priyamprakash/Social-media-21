@@ -10,18 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.social21.Model.DashboardModel;
-import com.app.social21.Model.StoryModel;
+import com.app.social21.Model.Post;
 import com.app.social21.R;
 
 import java.util.ArrayList;
 
 public class DashboardAdapter  extends  RecyclerView.Adapter<DashboardAdapter.viewHolder>{
 
-    ArrayList<DashboardModel> list;
+    ArrayList<Post> list;
     Context  context;
 
-    public DashboardAdapter(ArrayList<DashboardModel> list, Context context) {
+    public DashboardAdapter(ArrayList<Post> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -36,15 +35,15 @@ public class DashboardAdapter  extends  RecyclerView.Adapter<DashboardAdapter.vi
 
     @Override
     public void onBindViewHolder(@NonNull DashboardAdapter.viewHolder holder, int position) {
-        DashboardModel model = list.get(position);
-        holder.profile.setImageResource(model.getProfile());
-        holder.postImage.setImageResource(model.getPostImg());
-
-        holder.name.setText(model.getName());
-        holder.about.setText(model.getAbout());
-        holder.like.setText(model.getLike());
-        holder.comment.setText(model.getComment());
-        holder.share.setText(model.getShare());
+        Post model = list.get(position);
+//        holder.profile.setImageResource(model.getProfile());
+//        holder.postImage.setImageResource(model.getPostImg());
+//
+//        holder.name.setText(model.getName());
+//        holder.about.setText(model.getAbout());
+//        holder.like.setText(model.getLike());
+//        holder.comment.setText(model.getComment());
+//        holder.share.setText(model.getShare());
     }
 
 
