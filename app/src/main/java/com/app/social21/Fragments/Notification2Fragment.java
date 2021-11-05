@@ -60,11 +60,13 @@ public class Notification2Fragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        list.clear();
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             Notification notification = dataSnapshot.getValue(Notification.class);
-                            
+                            notification.setNotificationId(dataSnapshot.getKey());
+                            list.add(notification);
                         }
-
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
