@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.app.social21.Adapter.CommentAdapter;
 import com.app.social21.Model.Comment;
+import com.app.social21.Model.Notification;
 import com.app.social21.Model.Post;
 import com.app.social21.Model.User;
 import com.app.social21.databinding.ActivityCommentActvityBinding;
@@ -119,8 +120,21 @@ public class CommentActvity extends AppCompatActivity {
                                         .child("commentCount").setValue(commentCount + 1).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-
+                                        binding.commentEt.setText("");
                                         Toast.makeText(CommentActvity.this, "Commented", Toast.LENGTH_SHORT).show();
+
+                                        Notification notification = new Notification();
+                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                        notification.setNotificationAt(new Date().getTime());
+                                        notification.setPostId(postId);
+                                        notification.setPostedBy(postedBy);
+                                        notification.setType("comment");
+
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("notification")
+                                                .child(postedBy)
+                                                .push()
+                                                .setValue(notification);
                                     }
                                 });
                             }

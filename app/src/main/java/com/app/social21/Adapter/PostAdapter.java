@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.social21.CommentActvity;
+import com.app.social21.Model.Notification;
 import com.app.social21.Model.Post;
 import com.app.social21.Model.User;
 import com.app.social21.R;
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
 
@@ -105,6 +107,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.viewHolder> {
                                     public void onSuccess(Void unused) {
                                         holder.binding.like.setImageResource(R.drawable.red_like);
 
+
+                                        Notification notification = new Notification();
+                                        notification.setNotificationBy(FirebaseAuth.getInstance().getUid());
+                                        notification.setNotificationAt(new Date().getTime());
+                                        notification.setPostId(model.getPostId());
+                                        notification.setPostedBy(model.getPostedBy());
+                                        notification.setType("like");
+
+                                        FirebaseDatabase.getInstance().getReference()
+                                                .child("notification")
+                                                .child(model.getPostedBy())
+                                                .push()
+                                                .setValue(notification);
                                     }
                                 });
                             }

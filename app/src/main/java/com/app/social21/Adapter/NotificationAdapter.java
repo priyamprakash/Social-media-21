@@ -11,17 +11,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.app.social21.Model.NotificationModel;
+import com.app.social21.Model.Notification;
 import com.app.social21.R;
+import com.app.social21.databinding.Notification2sampleBinding;
 
 import java.util.ArrayList;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.viewHolder>{
 
-    ArrayList<NotificationModel> list;
+    ArrayList<Notification> list;
     Context context;
 
-    public NotificationAdapter(ArrayList<NotificationModel> list, Context context) {
+    public NotificationAdapter(ArrayList<Notification> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -36,11 +37,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-    NotificationModel model = list.get(position);
+    Notification model = list.get(position);
 
-    holder.profile.setImageResource(model.getProfile());
-    holder.notification.setText(Html.fromHtml(model.getNotification()));
-    holder.time.setText(model.getTime());
+//    holder.profile.setImageResource(model.getProfile());
+//    holder.notification.setText(Html.fromHtml(model.getNotification()));
+//    holder.time.setText(model.getTime());
     }
 
     @Override
@@ -50,14 +51,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public  class  viewHolder extends RecyclerView.ViewHolder{
 
-        ImageView profile;
-        TextView notification , time;
+        Notification2sampleBinding binding;
         public viewHolder(@NonNull View itemView) {
             super(itemView);
+            binding = Notification2sampleBinding.bind(itemView);
 
-            profile = itemView.findViewById(R.id.profile_image);
-            notification = itemView.findViewById(R.id.notification);
-            time = itemView.findViewById(R.id.profession);
 
 
 
