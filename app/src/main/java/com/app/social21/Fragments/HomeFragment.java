@@ -27,6 +27,7 @@ import com.app.social21.Model.Post;
 import com.app.social21.Model.Story;
 import com.app.social21.Model.UserStories;
 import com.app.social21.R;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +44,8 @@ import java.util.Date;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView storyRv ,dashboardRv;
+    RecyclerView storyRv ;
+    ShimmerRecyclerView dashboardRv;
     ArrayList<Story> storyList;
     ArrayList<Post> postList;
 //    ImageView addStory;
@@ -70,7 +72,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        dashboardRv = view.findViewById(R.id.dashboardRv);
+        dashboardRv.showShimmerAdapter();
 
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
@@ -126,7 +129,6 @@ public class HomeFragment extends Fragment {
 
 
 
-        dashboardRv = view.findViewById(R.id.dashboardRv);
         postList = new ArrayList<>();
 
 //
@@ -135,7 +137,6 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         dashboardRv.setLayoutManager(linearLayoutManager2);
         dashboardRv.setNestedScrollingEnabled(false);
-        dashboardRv.setAdapter(postAdapter);
 
         database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
             @Override
@@ -146,7 +147,10 @@ public class HomeFragment extends Fragment {
                     post.setPostId(dataSnapshot.getKey());
                     postList.add(post);
                 }
+                dashboardRv.setAdapter(postAdapter);
+                dashboardRv.hideShimmerAdapter();
                 postAdapter.notifyDataSetChanged();
+
 
             }
 
