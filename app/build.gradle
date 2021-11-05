@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.app.social21"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -55,6 +55,8 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.marlonlom:timeago:4.0.3'
     implementation 'com.github.3llomi:CircularStatusView:V1.0.2'
+    implementation 'com.github.OMARIHAMZA:StoryView:1.0.2-alpha'
+
 
 
 

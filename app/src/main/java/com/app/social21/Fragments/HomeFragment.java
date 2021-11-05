@@ -1,5 +1,6 @@
 package com.app.social21.Fragments;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,6 +18,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 
 import com.app.social21.Adapter.PostAdapter;
 import com.app.social21.Adapter.StoryAdapter;
@@ -49,6 +52,7 @@ public class HomeFragment extends Fragment {
     FirebaseStorage storage;
     RoundedImageView addStoryImage;
     ActivityResultLauncher<String> galleryLauncher ;
+    ProgressDialog dialog;
 
 
     public HomeFragment() {
@@ -58,6 +62,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dialog = new ProgressDialog(getContext());
 
     }
 
@@ -70,6 +75,14 @@ public class HomeFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         storage = FirebaseStorage.getInstance();
+
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setTitle("Story Uploading");
+        dialog.setMessage("Please Wait ...");
+        dialog.setCancelable(false);
+
+
+
         storyRv = view.findViewById(R.id.storyRv);
         storyList = new ArrayList<>();
 
@@ -86,6 +99,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
+                    storyList.clear();
                     for(DataSnapshot storySnapshot : snapshot.getChildren()){
                         Story story = new Story();
                         story.setStoryBy(storySnapshot.getKey());
@@ -158,6 +172,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onActivityResult(Uri result) {
                 addStoryImage.setImageURI(result);
+                dialog.show();
                 final StorageReference reference = storage.getReference().child("stories")
                         .child(FirebaseAuth.getInstance().getUid())
                         .child(new Date().getTime() + "");
@@ -184,7 +199,14 @@ public class HomeFragment extends Fragment {
                                                 .child(FirebaseAuth.getInstance().getUid())
                                                 .child("userStories")
                                                 .push()
-                                                .setValue(stories);
+                                                .setValue(stories).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                dialog.dismiss();
+                                            }
+                                        });
+
+
                                     }
                                 });
                             }
@@ -194,7 +216,7 @@ public class HomeFragment extends Fragment {
 
 
             }
-        });;
+        });
 
         return view;
 

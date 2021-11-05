@@ -8,8 +8,8 @@
     android:layout_marginLeft="@dimen/_16mdp">
 
 
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/story"
+    <ImageView
+        android:id="@+id/storyImage"
         android:layout_width="@dimen/_130mdp"
         android:layout_height="@dimen/_85mdp"
         android:layout_marginStart="16dp"
@@ -19,11 +19,7 @@
         android:src="@drawable/img_man1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:riv_border_color="#333333"
-        app:riv_border_width="2dip"
-        app:riv_corner_radius="10dip"
-        app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat" />
+        />
 
     <com.devlomi.circularstatusview.CircularStatusView
         android:id="@+id/statusCircle"
@@ -48,7 +44,7 @@
         android:layout_marginLeft="4dp"
         android:padding="4dp"
         android:src="@drawable/img_default"
-        app:layout_constraintStart_toStartOf="@+id/story"
+        app:layout_constraintStart_toStartOf="@+id/storyImage"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -59,7 +55,7 @@
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/story"
+        app:layout_constraintTop_toTopOf="@+id/storyImage"
         app:srcCompat="@drawable/img_live" />
 
     <TextView
@@ -73,9 +69,9 @@
         android:padding="2dp"
         android:text="Priyam Prakash"
         android:textColor="#ffffff"
-        app:layout_constraintBottom_toBottomOf="@+id/story"
-        app:layout_constraintStart_toStartOf="@+id/story"
-        app:layout_constraintTop_toTopOf="@+id/story"
+        app:layout_constraintBottom_toBottomOf="@+id/storyImage"
+        app:layout_constraintStart_toStartOf="@+id/storyImage"
+        app:layout_constraintTop_toTopOf="@+id/storyImage"
         app:layout_constraintVertical_bias="0.901" />
 
 
