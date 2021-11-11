@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.setting:
+            case R.id.logout:
                 auth.signOut();
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
