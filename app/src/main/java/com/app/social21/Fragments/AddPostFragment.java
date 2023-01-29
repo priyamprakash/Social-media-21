@@ -53,8 +53,8 @@ public class AddPostFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        auth =FirebaseAuth.getInstance();
-        database =FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
         dialog = new ProgressDialog(getContext());
 
@@ -77,8 +77,8 @@ public class AddPostFragment extends Fragment {
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    User user =snapshot.getValue(User.class);
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
                     Picasso.get().load(user.getProfilePic()).placeholder(R.drawable.img_default).into(binding.profileImage);
 
                     binding.name.setText(user.getName());
@@ -138,31 +138,34 @@ public class AddPostFragment extends Fragment {
                 final StorageReference reference = storage.getReference().child("posts")
                         .child(FirebaseAuth.getInstance().getUid())
                         .child(new Date().getTime() + "");
-                reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
+                if (uri != null) {
+                    reference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
 //                                setting all the things in  post model - setter method
-                                Post post = new Post();
-                                post.setPostImage(uri.toString());
-                                post.setPostedBy(FirebaseAuth.getInstance().getUid());
-                                post.setPostDescription(binding.postDescription.getText().toString());
-                                post.setPostedAt(new Date().getTime());
+                                    Post post = new Post();
+                                    post.setPostImage(uri.toString());
+                                    post.setPostedBy(FirebaseAuth.getInstance().getUid());
+                                    post.setPostDescription(binding.postDescription.getText().toString());
+                                    post.setPostedAt(new Date().getTime());
 
 //                                putting the data from post model to database - posts node
-                                database.getReference().child("posts").push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        dialog.dismiss();
-                                        Toast.makeText(getContext(), "Posted successfully", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
+                                    database.getReference().child("posts").push().setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            dialog.dismiss();
+                                            Toast.makeText(getContext(), "Posted successfully", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+
 
             }
         });
