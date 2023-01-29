@@ -41,6 +41,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -85,11 +86,8 @@ public class HomeFragment extends Fragment {
         dialog.setCancelable(false);
 
 
-
         storyRv = view.findViewById(R.id.storyRv);
         storyList = new ArrayList<>();
-
-//        list.add(new Story(R.drawable.img_man1, R.drawable.img_live, R.drawable.profile, "Priyam"));
 
 
         StoryAdapter adapter = new StoryAdapter(storyList, getContext());
@@ -150,8 +148,6 @@ public class HomeFragment extends Fragment {
                 dashboardRv.setAdapter(postAdapter);
                 dashboardRv.hideShimmerAdapter();
                 postAdapter.notifyDataSetChanged();
-
-
             }
 
             @Override
@@ -159,9 +155,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-
-
 
         addStoryImage = view.findViewById(R.id.addStoryImage);
         addStoryImage.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +171,7 @@ public class HomeFragment extends Fragment {
                 addStoryImage.setImageURI(result);
                 dialog.show();
                 final StorageReference reference = storage.getReference().child("stories")
-                        .child(FirebaseAuth.getInstance().getUid())
+                        .child(Objects.requireNonNull(FirebaseAuth.getInstance().getUid()))
                         .child(new Date().getTime() + "");
                 reference.putFile(result).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
